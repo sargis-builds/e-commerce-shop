@@ -1,0 +1,2189 @@
+/* ============================================================
+   ԻՄ ԽԱՆՈՒԹԸ — Dark + ոսկե-նարնջագույն շեշտ
+   ============================================================ */
+
+:root {
+    --bg-main: #0d1117;
+    --bg-surface: #161b22;
+    --bg-elevated: #1c2128;
+    --bg-input: #21262d;
+    --bg-hover: #1f2630;
+
+    --border: #2a313a;
+    --border-soft: #1f242c;
+
+    --text-main: #e6edf3;
+    --text-muted: #8b949e;
+    --text-dim: #6e7681;
+
+    --accent: #d97706;
+    --accent-hover: #b45309;
+    --accent-active: #92400e;
+    --accent-soft: rgba(217, 119, 6, 0.08);
+
+    --success: #2ea043;
+    --error: #da3633;
+
+    --radius-sm: 5px;
+    --radius: 8px;
+    --radius-lg: 12px;
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35);
+    --shadow: 0 6px 22px rgba(0, 0, 0, 0.5);
+
+    --t: 0.15s ease;
+    --header-h: 70px;
+    --cart-h: 60px;      /* զամբյուղի մոտավոր բարձրությունը */
+    --cart-gap: 24px;    /* հեռավորությունը էկրանի ներքևից */
+    --cart-safe: 110px;  /* ընդհանուր ազատ տարածք ներքևում */
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+    background: var(--bg-main);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif;
+    margin: 0;
+    padding-top: var(--header-h);
+    padding-bottom: var(--cart-safe);   /* ամենակարևորը */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.5;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent); text-decoration: none; transition: color var(--t); }
+a:hover { color: var(--accent-hover); }
+img { max-width: 100%; display: block; }
+h1, h2, h3, h4 { margin: 0; font-weight: 600; }
+
+/* ============================================================
+   ԿՈՃԱԿՆԵՐ
+   ============================================================ */
+button, .btn {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    transition: background var(--t);
+    white-space: nowrap;
+}
+button:hover, .btn:hover { background: var(--accent-hover); }
+button:active, .btn:active { background: var(--accent-active); }
+button:focus-visible, .btn:focus-visible, a:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* ============================================================
+   ՎԵՐՆԱԳԻՐ
+   ============================================================ */
+.top-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--header-h);
+    z-index: 100;
+    background: var(--bg-surface);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 28px;
+    border-bottom: 1px solid var(--border);
+    gap: 20px;
+}
+
+.left-group,
+.right-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px 12px;
+    text-decoration: none;
+}
+.logo-text {
+    color: var(--text-main);
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+}
+.logo-line {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin-top: 2px;
+    position: relative;
+}
+.logo-line::after {
+    content: '▶';
+    position: absolute;
+    right: -9px;
+    top: -5px;
+    color: var(--accent);
+    font-size: 9px;
+    transform: rotate(-20deg);
+}
+
+.center-group {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    max-width: 50%;
+    min-width: 0;
+}
+
+.cat select {
+    height: 40px;
+    padding: 0 12px;
+    border: 1px solid var(--border);
+    border-right: none;
+    border-radius: var(--radius) 0 0 var(--radius);
+    background: var(--bg-elevated);
+    color: var(--text-main);
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+    outline: none;
+}
+.center-group .search { flex: 1; min-width: 0; }
+.center-group input {
+    width: 100%;
+    height: 40px;
+    padding: 0 14px;
+    border: 1px solid var(--border);
+    border-right: none;
+    border-radius: 0;
+    outline: none;
+    font-size: 14px;
+    font-family: inherit;
+    background: var(--bg-input);
+    color: var(--text-main);
+}
+.center-group input::placeholder { color: var(--text-dim); }
+.center-group input:focus { border-color: var(--text-dim); }
+.center-group button {
+    height: 40px;
+    padding: 0 18px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-size: 14px;
+}
+
+/* Հեդերի հավելումներ */
+.header-link {
+    color: var(--text-muted);
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: var(--radius);
+    text-decoration: none;
+    transition: color var(--t), background var(--t);
+    white-space: nowrap;
+}
+.header-link:hover {
+    color: var(--text-main);
+    background: var(--bg-elevated);
+}
+
+.admin-greeting {
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    margin: 0 4px;
+}
+
+.admin-header-title {
+    flex: 1;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+}
+
+.admin-back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: var(--radius);
+    transition: color var(--t), background var(--t);
+}
+.admin-back-link:hover {
+    color: var(--text-main);
+    background: var(--bg-elevated);
+}
+
+.admin-logout-btn {
+    display: inline-block;
+    background: transparent;
+    color: var(--text-muted);
+    padding: 7px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: color var(--t), border-color var(--t);
+    white-space: nowrap;
+}
+.admin-logout-btn:hover {
+    color: var(--text-main);
+    border-color: var(--text-dim);
+}
+
+.lang select,
+.history {
+    background: var(--bg-elevated);
+    color: var(--text-main);
+    padding: 8px 14px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color var(--t);
+}
+.history:hover { border-color: var(--text-dim); }
+
+/* ============================================================
+   ԶԱՄԲՅՈՒՂԻ ԿՈՃԱԿԸ (sticky)
+   ============================================================ */
+
+.cart-header {
+    position: sticky;
+    bottom: var(--cart-gap);
+    align-self: flex-end;
+    margin: 0 24px 24px 0;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent);
+    color: #fff;
+    padding: 12px 22px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.5);
+    z-index: 90;
+    transition: background var(--t);
+}
+.cart-header:hover {
+    background: var(--accent-hover);
+    color: #fff;
+}
+
+.cart-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    background: rgba(255, 255, 255, 0.22);
+    color: #fff;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    transition: background var(--t), color var(--t);
+}
+
+/* ============================================================
+   ԷՋԵՐԻ ՎԵՐՆԱԳՐԵՐ
+   ============================================================ */
+.admin-page-title {
+    color: var(--text-main);
+    font-size: 24px;
+    margin: 30px 28px 22px;
+    font-weight: 700;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+    letter-spacing: 0.2px;
+}
+
+/* ============================================================
+   ԿԱՏԵԳՈՐԻԱ & ԱՊՐԱՆՔՆԵՐ — GRID (շարքերով, ոչ scroll)
+   ============================================================ */
+
+.category-block {
+    padding: 0 28px;
+    margin-bottom: 44px;
+}
+
+.category-block h2 {
+    margin: 0 0 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-main);
+    font-size: 19px;
+    font-weight: 600;
+}
+
+/*
+   ԱՅՍ Է ՓՈՓՈԽՎԱԾԸ։
+   auto-fill — լրացնում է էկրանի լայնությունը այնքան, ինչքան տեղավորվում է։
+   minmax(200px, 1fr) — ամեն սյունը մինիմում 200px, հետո 1fr (հավասարաչափ)։
+   Երբ տեղը վերջանում է → ավտոմատ նոր տող։
+*/
+/* Desktop — 6 սյուն, ամեն մեկը հավասար լայնությամբ */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+    padding: 4px 0;
+}
+
+.product {
+    display: flex;
+    flex-direction: column;
+    padding: 14px;
+    border-radius: var(--radius-lg);
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    transition: border-color var(--t);
+    gap: 6px;
+}
+
+.product:hover { border-color: var(--text-dim); }
+
+.product-image {
+    flex-shrink: 0;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    background: var(--bg-elevated);
+    border-radius: var(--radius);
+    position: relative;
+    overflow: hidden;
+}
+
+.product h3 {
+    font-size: 15px;
+    color: var(--text-main);
+    margin: 0;
+    font-weight: 500;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 2.6em;
+}
+
+.product p {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product p.description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    white-space: normal;
+    overflow: hidden;
+    min-height: 2.6em;
+}
+
+/* «Զեղչված արժեքը» — վերջին <p>-ը, որը ցույց է տալիս վերջնական գինը,
+   միշտ թող 2 տողով գնա, ոչ թե կտրվի */
+.product p:last-of-type {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    line-height: 1.25;
+    min-height: 1.25em;
+}
+
+.product .add-to-cart {
+    flex-shrink: 0;
+    margin-top: auto;   /* ԿՈՃԱԿԸ ՄԻՇՏ ՆԵՐՔԵՎՈՒՄ */
+    width: 100%;
+}
+
+.hot-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: var(--error);
+    color: #fff;
+    padding: 3px 9px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    z-index: 2;
+}
+.hot-badge.super { background: #c81e1e; }
+
+.product-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+.product-link:hover h3 {
+    color: var(--accent);
+}
+
+/* ============================================================
+   PRODUCT DETAIL ԷՋ (product.php)
+   ============================================================ */
+
+.product-page {
+    display: grid;
+    grid-template-columns: 400px minmax(0, 1fr);
+    gap: 40px;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 0 28px;
+    align-items: start;
+}
+
+/* Ձախ՝ նկար — ՖԻՔՍՎԱԾ 400×400 */
+.product-page-image {
+    width: 400px;
+    height: 400px;
+    background: var(--bg-elevated);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.product-page-placeholder {
+    font-size: 80px;
+    opacity: 0.12;
+    user-select: none;
+}
+
+/* Աջ՝ տեղեկություն */
+.product-page-info {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-width: 0;
+}
+
+.product-page-cat {
+    display: inline-block;
+    color: var(--text-muted);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+    width: fit-content;
+    transition: color var(--t);
+}
+.product-page-cat:hover { color: var(--accent); }
+
+.product-page-name {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-main);
+    line-height: 1.3;
+}
+
+.product-page-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.55;
+}
+
+.product-page-price {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 12px;
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.product-page-price .price-old {
+    color: var(--text-dim);
+    text-decoration: line-through;
+    font-size: 15px;
+}
+
+.product-page-price .price-new {
+    color: var(--accent);
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.product-page-price .price-save {
+    color: var(--success);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.product-page-stock { font-size: 13px; }
+.stock-ok { color: var(--success); font-weight: 600; }
+.stock-no { color: var(--error); font-weight: 600; }
+
+.product-page-btn {
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.product-page-btn:disabled {
+    background: var(--bg-elevated);
+    color: var(--text-dim);
+    cursor: not-allowed;
+}
+
+.product-page-cart-link {
+    color: var(--text-muted);
+    font-size: 12px;
+    text-align: center;
+    text-decoration: none;
+    transition: color var(--t);
+}
+.product-page-cart-link:hover { color: var(--accent); }
+
+/* ── Tablet ── */
+@media (max-width: 900px) {
+    .product-page {
+        grid-template-columns: 1fr;
+        gap: 24px;
+        max-width: 600px;
+        padding: 0 20px;
+        margin: 20px auto;
+    }
+    .product-page-image {
+        width: 300px;
+        height: 300px;
+        margin: 0 auto;
+    }
+    .product-page-name { font-size: 22px; }
+    .product-page-price .price-new { font-size: 24px; }
+}
+
+/* ── Mobile ── */
+@media (max-width: 700px) {
+    .product-page {
+        padding: 0 15px;
+        gap: 16px;
+        margin: 16px auto;
+    }
+    .product-page-image {
+        width: 220px;
+        height: 220px;
+    }
+    .product-page-placeholder { font-size: 44px; }
+    .product-page-info { gap: 10px; }
+    .product-page-name { font-size: 18px; }
+    .product-page-desc { font-size: 13px; line-height: 1.5; }
+    .product-page-price {
+        padding: 12px 0;
+        gap: 8px;
+    }
+    .product-page-price .price-old { font-size: 13px; }
+    .product-page-price .price-new { font-size: 20px; }
+    .product-page-price .price-save { font-size: 11px; }
+    .product-page-stock { font-size: 12px; }
+    .product-page-btn { padding: 12px; font-size: 14px; }
+    .product-page-cart-link { font-size: 11px; }
+}
+
+/* ── Small mobile ── */
+@media (max-width: 480px) {
+    .product-page { padding: 0 12px; }
+    .product-page-image {
+        width: 180px;
+        height: 180px;
+    }
+    .product-page-placeholder { font-size: 36px; }
+    .product-page-name { font-size: 17px; }
+    .product-page-price .price-new { font-size: 19px; }
+}
+
+/* ============================================================
+   ԶԱՄԲՅՈՒՂԻ ԷՋ
+   ============================================================ */
+.cart-summary {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px 26px;
+    margin: 22px 28px;
+    text-align: center;
+}
+.cart-summary h3 {
+    color: var(--text-main);
+    font-size: 19px;
+    margin-bottom: 14px;
+    font-weight: 600;
+}
+.cart-summary .saved {
+    color: var(--success);
+    font-size: 14px;
+    font-weight: 600;
+    margin: 8px 0;
+}
+.cart-summary .old-price {
+    color: var(--text-dim);
+    font-size: 14px;
+    font-weight: 500;
+    margin: 8px 0;
+    text-decoration: line-through;
+}
+
+.cart-item {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    margin: 14px 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+}
+
+.cart-item-image {
+    position: relative;
+    width: 180px;
+    height: 180px;
+    flex-shrink: 0;
+    background: var(--bg-elevated);
+    border-radius: var(--radius);
+}
+
+.discount-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: var(--error);
+    color: #fff;
+    padding: 3px 9px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.cart-item-info { flex: 1; min-width: 0; }
+.cart-item-info h3 {
+    font-size: 19px;
+    color: var(--text-main);
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+.cart-item-info p {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin: 4px 0;
+}
+
+.cart-item-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 180px;
+    flex-shrink: 0;
+}
+
+.cart-item-price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+.old-price {
+    color: var(--text-dim);
+    text-decoration: line-through;
+    font-size: 12px;
+}
+.new-price {
+    color: var(--text-main);
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.cart-item-buttons { display: flex; gap: 6px; }
+.cart-item-buttons button {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    font-size: 14px;
+    border-radius: var(--radius);
+}
+
+.cart-summary .btn-shop,
+.cart-summary .btn-checkout {
+    display: inline-block;
+    padding: 12px 28px;
+    min-width: 200px;
+    text-align: center;
+    margin: 12px 6px 0;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: background var(--t);
+}
+.cart-summary .btn-shop { background: var(--success); color: #fff; }
+.cart-summary .btn-shop:hover { background: #238636; color: #fff; }
+.cart-summary .btn-checkout { background: var(--accent); color: #fff; }
+.cart-summary .btn-checkout:hover { background: var(--accent-hover); color: #fff; }
+
+.btn-back {
+    display: inline-block;
+    margin: 20px 28px 0;
+    padding: 9px 18px;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 13px;
+    transition: color var(--t), border-color var(--t);
+    width: fit-content;
+}
+.btn-back:hover { color: var(--text-main); border-color: var(--text-dim); }
+
+.empty-cart {
+    text-align: center;
+    padding: 70px 20px;
+}
+.empty-cart-icon {
+    font-size: 60px;
+    margin-bottom: 16px;
+    opacity: 0.35;
+}
+.empty-cart h2 {
+    color: var(--text-main);
+    font-size: 20px;
+    margin: 12px 0;
+    font-weight: 600;
+}
+.empty-cart p {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+.btn-shop {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    padding: 11px 26px;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 14px;
+    transition: background var(--t);
+}
+.btn-shop:hover { background: var(--accent-hover); color: #fff; }
+
+/* ============================================================
+   CHECKOUT ԷՋ
+   ============================================================ */
+.checkout-summary {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px 26px;
+    margin: 22px 28px;
+}
+.checkout-summary h2 {
+    color: var(--text-main);
+    font-size: 19px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+}
+
+.checkout-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 9px 0;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+.checkout-line.total {
+    border-top: 1px solid var(--border);
+    margin-top: 8px;
+    padding-top: 14px;
+    color: var(--text-main);
+    font-size: 17px;
+    font-weight: 700;
+}
+.checkout-line.saved { color: var(--success); font-weight: 600; }
+
+.checkout-form {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 26px;
+    margin: 22px auto;
+    max-width: 600px;
+}
+.checkout-form h2 {
+    color: var(--text-main);
+    font-size: 19px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+}
+
+.form-field { margin-bottom: 16px; }
+.form-field label {
+    display: block;
+    color: var(--text-main);
+    font-size: 13px;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+.form-field input {
+    width: 100%;
+    height: 42px;
+    padding: 0 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-input);
+    color: var(--text-main);
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color var(--t);
+}
+.form-field input:focus { border-color: var(--text-dim); }
+.form-field input::placeholder { color: var(--text-dim); }
+
+.checkout-form .btn-checkout {
+    width: 100%;
+    padding: 13px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background var(--t);
+}
+.checkout-form .btn-checkout:hover { background: var(--accent-hover); }
+
+.btn-back-to-shop {
+    align-self: center;
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    padding: 11px 26px;
+    border-radius: var(--radius);
+    font-weight: 600;
+    font-size: 14px;
+    transition: background var(--t);
+}
+.btn-back-to-shop:hover { background: var(--accent-hover); color: #fff; }
+
+/* ============================================================
+   THANKS ԷՋ
+   ============================================================ */
+.thanks-box {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 38px;
+    margin: 30px auto;
+    max-width: 700px;
+    text-align: center;
+}
+.thanks-icon { font-size: 48px; margin-bottom: 16px; }
+.thanks-box h2 {
+    color: var(--text-main);
+    font-size: 22px;
+    margin-bottom: 22px;
+    font-weight: 700;
+}
+.thanks-box h3 {
+    color: var(--text-main);
+    font-size: 15px;
+    margin: 22px 0 12px;
+    text-align: left;
+    font-weight: 600;
+}
+.thanks-info {
+    background: var(--bg-elevated);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 20px;
+    text-align: left;
+}
+.thanks-info p {
+    color: var(--text-muted);
+    margin: 6px 0;
+    font-size: 14px;
+}
+.thanks-info strong { color: var(--text-main); }
+
+.thanks-items {
+    background: var(--bg-elevated);
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    margin-bottom: 18px;
+}
+.thanks-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 7px 0;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+}
+.thanks-line:last-child { border-bottom: none; }
+
+.thanks-total {
+    color: var(--text-main);
+    font-size: 19px;
+    font-weight: 700;
+    padding: 14px 0;
+    margin-bottom: 18px;
+}
+
+/* ============================================================
+   NOTIFICATION
+   ============================================================ */
+.notification {
+    position: fixed;
+    top: 88px;
+    right: 24px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    color: var(--text-main);
+    padding: 12px 18px;
+    border-radius: var(--radius);
+    font-size: 13px;
+    font-weight: 500;
+    z-index: 9999;
+    box-shadow: var(--shadow);
+    max-width: 320px;
+    line-height: 1.45;
+    animation: slideIn 0.2s ease;
+}
+.notification.success { border-left-color: var(--success); }
+.notification.error { border-left-color: var(--error); }
+
+@keyframes slideIn {
+    from { transform: translateX(30px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+/* ============================================================
+   ՖՈՐՄԱՅԻ VALIDATION
+   ============================================================ */
+.form-error-general {
+    background: rgba(218, 54, 51, 0.08);
+    border: 1px solid var(--error);
+    color: var(--error);
+    padding: 11px 15px;
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    font-weight: 500;
+    font-size: 13px;
+    text-align: center;
+}
+.field-hint {
+    color: var(--text-dim);
+    font-size: 12px;
+    margin: 5px 0 0;
+}
+.field-error {
+    color: var(--error);
+    font-size: 12px;
+    margin: 5px 0 0;
+    font-weight: 500;
+}
+.form-field input.input-error { border-color: var(--error); }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+    background: var(--bg-surface);
+    border-top: 1px solid var(--border);
+    margin-top: auto;
+    padding: 36px 20px 20px;
+}
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.footer-section { min-width: 180px; }
+.footer-section h4 {
+    color: var(--text-main);
+    margin-bottom: 14px;
+    font-size: 14px;
+    font-weight: 600;
+}
+.footer-section p {
+    color: var(--text-muted);
+    margin: 7px 0;
+    font-size: 13px;
+    cursor: pointer;
+    transition: color var(--t);
+}
+.footer-section p:hover { color: var(--text-main); }
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 26px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 12px;
+}
+
+/* ============================================================
+   ԱԴՄԻՆ
+   ============================================================ */
+.admin-login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+.admin-login-box {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 38px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: var(--shadow);
+}
+.admin-login-title {
+    color: var(--text-main);
+    font-size: 20px;
+    text-align: center;
+    margin: 0 0 26px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 700;
+}
+.admin-login-form label {
+    display: block;
+    color: var(--text-muted);
+    font-size: 12px;
+    margin-bottom: 6px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.admin-login-form input {
+    width: 100%;
+    height: 42px;
+    padding: 0 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-input);
+    color: var(--text-main);
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color var(--t);
+    margin-bottom: 16px;
+}
+.admin-login-form input:focus { border-color: var(--text-dim); }
+.admin-login-form button {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    margin-top: 4px;
+}
+.admin-login-error {
+    background: rgba(218, 54, 51, 0.08);
+    border: 1px solid var(--error);
+    color: var(--error);
+    padding: 11px 15px;
+    border-radius: var(--radius);
+    margin-bottom: 16px;
+    font-weight: 500;
+    text-align: center;
+    font-size: 13px;
+}
+
+.admin-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 28px 60px;
+    width: 100%;
+}
+.admin-table-wrap {
+    overflow-x: auto;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--bg-surface);
+}
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+.admin-table th {
+    background: var(--bg-elevated);
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 11px;
+    padding: 13px 18px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+}
+.admin-table td {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border-soft);
+    color: var(--text-main);
+    vertical-align: middle;
+}
+.admin-table tbody tr { transition: background var(--t); }
+.admin-table tbody tr:hover { background: var(--bg-elevated); }
+.admin-table tbody tr:last-child td { border-bottom: none; }
+.admin-table .row-link {
+    color: var(--accent);
+    font-weight: 500;
+    white-space: nowrap;
+    transition: color var(--t);
+    display: inline-block;
+}
+.admin-table .row-link:hover { color: var(--accent-hover); }
+
+.admin-order-box {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 22px 26px;
+    margin: 0 0 22px;
+}
+.admin-order-box h2 {
+    color: var(--text-main);
+    font-size: 17px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 600;
+}
+.admin-order-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-soft);
+    font-size: 14px;
+}
+.admin-order-row:last-child { border-bottom: none; }
+.admin-order-row .label { color: var(--text-muted); }
+.admin-order-row .value { color: var(--text-main); font-weight: 500; }
+
+/* ============================================================
+   OUT-OF-STOCK
+   ============================================================ */
+.product.out-of-stock { opacity: 0.55; filter: grayscale(0.5); }
+.product.out-of-stock .add-to-cart {
+    background: var(--bg-elevated);
+    color: var(--text-dim);
+    cursor: not-allowed;
+}
+.product.out-of-stock .add-to-cart:hover {
+    background: var(--bg-elevated);
+    color: var(--text-dim);
+}
+.product.out-of-stock .hot-badge,
+.product.out-of-stock .sale-badge { opacity: 0.6; }
+
+/* ============================================================
+   MICRO-INTERACTIONS
+   ============================================================ */
+.plus-one {
+    position: absolute;
+    top: 50%;
+    right: 18px;
+    color: var(--success);
+    font-weight: 700;
+    font-size: 15px;
+    pointer-events: none;
+    animation: plusOneAnim 0.7s ease forwards;
+    z-index: 10;
+}
+@keyframes plusOneAnim {
+    0%   { opacity: 0; transform: translateY(0) scale(0.8); }
+    20%  { opacity: 1; transform: translateY(-4px) scale(1.15); }
+    100% { opacity: 0; transform: translateY(-28px) scale(1); }
+}
+
+.cart-header.bounce {
+    animation: cartBounce 0.3s ease;
+}
+@keyframes cartBounce {
+    0%   { transform: scale(1); }
+    45%  { transform: scale(1.08); }
+    100% { transform: scale(1); }
+}
+
+.cart-count.flash {
+    animation: countFlash 0.6s ease;
+}
+@keyframes countFlash {
+    0%, 100% { background: rgba(255, 255, 255, 0.22); color: #fff; }
+    50%      { background: var(--success); color: #fff; }
+}
+
+/* ============================================================
+   1200px-ից նեղ — 5 սյուն
+   ============================================================ */
+@media (max-width: 1200px) {
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 900px) {
+    .top-header { padding: 0 20px; }
+    .center-group { max-width: 45%; }
+
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 12px;
+    }
+
+    .cart-item { gap: 20px; padding: 18px; }
+    .cart-item-image { width: 150px; height: 150px; }
+    .cart-item-actions { height: 150px; }
+}
+
+/* ============================================================
+   700px-ից նեղ — հեդերը 2 տողով, ապրանքները 4 սյուն
+   ============================================================ */
+@media (max-width: 700px) {
+    :root {
+        --header-h: 135px;
+        --cart-safe: 120px;
+    }
+
+    body { padding-top: var(--header-h); }
+
+    /* ՀԵԴԵՐԸ — 2 տողով */
+    .top-header {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "logo    right"
+            "center  center";
+        gap: 10px 12px;
+        height: auto;
+        padding: 12px 15px;
+        align-items: center;
+    }
+    .left-group { grid-area: logo; justify-content: flex-start; }
+    .right-group { grid-area: right; justify-content: flex-end; gap: 8px; }
+    .center-group { grid-area: center; max-width: 100%; width: 100%; }
+
+    /* Ապրանքներ — ավելի նեղ քարտեր */
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 10px;
+    }
+
+    /* Քարտը՝ ավելի կոմպակտ */
+    .product {
+        padding: 10px;
+        gap: 4px;
+    }
+    .product h3 {
+        font-size: 13px;
+        min-height: 2.4em;
+    }
+    .product p {
+        font-size: 11px;
+    }
+    .product p.description {
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    min-height: 1.4em;
+}
+
+    /* «Առկա է X» — փոքր */
+    .product p:nth-of-type(4) {
+        font-size: 10px;
+        color: var(--text-dim);
+    }
+
+    /* «Զեղչված արժեքը» — ընդգծված, կենտրոն, թույլատրել 2 տող */
+    .product p:last-of-type {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--accent);
+        text-align: center;
+        line-height: 1.2;
+        margin-top: auto;
+    }
+
+    /* Կոճակը — միշտ ներքևում */
+    .product .add-to-cart {
+        width: 100%;
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    .plus-one { right: 8px; font-size: 12px; }
+
+    /* Զամբյուղի կոճակ */
+    .cart-header {
+        bottom: 20px;
+        top: calc(var(--header-h) + 20px); /* Սա արգելում է կոճակին կպնել հեդերին */
+        margin: 0 16px 20px 0; /* 20px-ը ներքևի արանքն է (ֆուտերից) */
+        padding: 10px 16px;
+        font-size: 13px;
+        max-width: calc(100% - 32px);
+        box-sizing: border-box;
+    }
+    .cart-header span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .cart-count {
+        flex-shrink: 0;
+        min-width: 18px;
+        height: 18px;
+        font-size: 10px;
+    }
+
+    /* Cart-item */
+    .cart-item {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 12px;
+        margin: 10px 12px;
+    }
+    .cart-item-image { width: 80px; height: 80px; flex-shrink: 0; }
+    .cart-item-info h3 { font-size: 15px; margin-bottom: 4px; }
+    .cart-item-info p { font-size: 12px; margin: 2px 0; }
+    .cart-item-actions {
+        height: auto;
+        align-items: flex-end;
+        gap: 6px;
+        flex-shrink: 0;
+    }
+    .cart-item-price { align-items: flex-end; gap: 0; }
+    .old-price { font-size: 11px; }
+    .new-price { font-size: 15px; }
+    .cart-item-buttons { gap: 4px; }
+    .cart-item-buttons button { width: 30px; height: 30px; font-size: 12px; border-radius: 6px; }
+
+    .footer-content { flex-direction: column; text-align: center; }
+
+    .cart-summary .btn-shop,
+    .cart-summary .btn-checkout {
+        width: 100%;
+        min-width: unset;
+        margin: 8px 0 0;
+    }
+
+    .admin-container { padding: 20px 15px 50px; }
+    .admin-table th, .admin-table td { padding: 11px 12px; font-size: 12px; }
+    .admin-page-title { font-size: 20px; margin: 24px 15px 18px; }
+    .category-block { padding: 0 15px; }
+}
+
+/* ============================================================
+   480px-ից նեղ
+   ============================================================ */
+@media (max-width: 480px) {
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 10px;
+    }
+
+    .top-header { padding: 10px 12px; }
+    .logo-text { font-size: 15px; }
+    .header-link,
+    .lang select,
+    .history {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .product { padding: 8px; }
+    .product h3 { font-size: 12px; }
+    .product p { font-size: 10px; }
+
+    .category-block { padding: 0 12px; }
+    .category-block h2 { font-size: 16px; }
+
+    .cart-header {
+        padding: 9px 14px;
+        font-size: 12px;
+        max-width: calc(100% - 20px);
+    }
+
+    .admin-page-title { font-size: 18px; margin: 20px 12px 14px; }
+    .admin-container { padding: 18px 12px 40px; }
+}
+
+/* ============================================================
+   LIVE SEARCH — dropdown ցուցակ
+   ============================================================ */
+
+.search {
+    position: relative;   /* dropdown-ը իր ներսում դիրքավորվի */
+}
+
+.search-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    z-index: 500;
+    max-height: 420px;
+    overflow-y: auto;
+    padding: 4px 0;
+}
+
+/* Ապրանքի մեկ տող */
+.search-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    text-decoration: none;
+    color: var(--text-main);
+    border-bottom: 1px solid var(--border-soft);
+    transition: background var(--t);
+}
+.search-item:last-child {
+    border-bottom: none;
+}
+.search-item:hover {
+    background: var(--bg-elevated);
+    color: var(--text-main);
+}
+
+/* Ապրանքի անունը */
+.search-item-name {
+    flex: 1;
+    min-width: 0;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Որոնվող բառի նշում */
+.search-item-name mark {
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 1px 2px;
+    border-radius: 3px;
+    font-weight: 700;
+}
+
+/* Գնի հատվածը */
+.search-item-price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    font-size: 13px;
+}
+
+/* Հին գինը (կարմիր, գծված) */
+.search-item-discount {
+    color: var(--error);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* Վերջնական գինը (ոսկե, մեծ) */
+.search-item-final {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 13px;
+}
+
+/* Երբ արդյունք չկա */
+.search-empty {
+    padding: 16px 14px;
+    color: var(--text-muted);
+    font-size: 13px;
+    text-align: center;
+}
+
+/* Mobile-ում dropdown-ը ավելի կոմպակտ */
+@media (max-width: 700px) {
+    .search-dropdown {
+        max-height: 320px;
+    }
+    .search-item {
+        padding: 9px 12px;
+        gap: 8px;
+    }
+    .search-item-name {
+        font-size: 12px;
+    }
+    .search-item-price {
+        font-size: 12px;
+        gap: 6px;
+    }
+    .search-item-discount {
+        font-size: 10px;
+    }
+    .search-item-final {
+        font-size: 12px;
+    }
+}
+
+/* Landscape հեռախոսի համար — 2 սյուն */
+@media (max-width: 900px) and (orientation: landscape) and (min-width: 500px) {
+    .product-page {
+        grid-template-columns: 240px minmax(0, 1fr);
+        gap: 20px;
+        max-width: 100%;
+        padding: 0 20px;
+    }
+    .product-page-image {
+        width: 240px;
+        height: 240px;
+        margin: 0;
+    }
+    .product-page-info {
+        gap: 8px;
+    }
+    .product-page-name { font-size: 18px; }
+    .product-page-desc { font-size: 13px; }
+    .product-page-price { padding: 10px 0; }
+    .product-page-price .price-new { font-size: 20px; }
+    .product-page-btn { padding: 10px; font-size: 13px; }
+}
+
+/* ============================================================
+   BREADCRUMB (product.php)
+   ============================================================ */
+.breadcrumb {
+    max-width: 900px;
+    margin: 20px auto 0;
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+}
+.breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color var(--t);
+}
+.breadcrumb a:hover { color: var(--accent); }
+.breadcrumb span { color: var(--text-dim); }
+.breadcrumb-current {
+    color: var(--text-main);
+    font-weight: 500;
+}
+
+/* ============================================================
+   BREADCRUMB (product.php)
+   ============================================================ */
+.breadcrumb {
+    max-width: 900px;
+    margin: 20px auto 0;
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-muted);
+    flex-wrap: wrap;
+}
+.breadcrumb a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color var(--t);
+}
+.breadcrumb a:hover { color: var(--accent); }
+.breadcrumb span { color: var(--text-dim); }
+.breadcrumb-current {
+    color: var(--text-main);
+    font-weight: 500;
+}
+
+/* ============================================================
+   ՔԱՆԱԿ + ԿՈՃԱԿ ՄԵԿ ՏՈՂՈՒՄ (product.php)
+   ============================================================ */
+.product-page-actions {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.qty-selector {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.qty-controls {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    height: 46px;
+}
+
+.qty-btn {
+    width: 34px;
+    height: 100%;
+    padding: 0;
+    background: var(--bg-elevated);
+    color: var(--text-main);
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background var(--t);
+}
+.qty-btn:hover { background: var(--bg-input); }
+.qty-btn:active { background: var(--accent); color: #fff; }
+.qty-btn:disabled { cursor: not-allowed; }
+
+.qty-controls input {
+    width: 44px;
+    height: 100%;
+    text-align: center;
+    background: var(--bg-surface);
+    color: var(--text-main);
+    border: none;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    outline: none;
+}
+
+.product-page-btn {
+    flex: 1;
+    padding: 0 20px;
+    height: 46px;
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+    .breadcrumb {
+        padding: 0 15px;
+        margin: 12px auto 0;
+        font-size: 12px;
+    }
+    .product-page-actions { gap: 8px; }
+    .qty-controls { height: 42px; }
+    .qty-btn { width: 30px; font-size: 15px; }
+    .qty-controls input { width: 40px; font-size: 13px; }
+    .product-page-btn {
+        height: 42px;
+        padding: 0 14px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .breadcrumb { padding: 0 12px; }
+    .product-page-actions { gap: 6px; }
+    .qty-controls { height: 40px; }
+    .qty-btn { width: 28px; font-size: 14px; }
+    .qty-controls input { width: 36px; font-size: 12px; }
+    .product-page-btn {
+        height: 40px;
+        padding: 0 10px;
+        font-size: 12px;
+    }
+}
+
+/* ============================================================
+   ADMIN — ԱՊՐԱՆՔՆԵՐԻ ԿԱՌԱՎԱՐՈՒՄ
+   ============================================================ */
+
+.admin-page-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin: 24px 0 20px;
+    flex-wrap: wrap;
+}
+
+.admin-page-head .admin-page-title {
+    margin: 0;
+    border: none;
+    padding: 0;
+}
+
+.admin-add-btn {
+    display: inline-block;
+    background: var(--success);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background var(--t);
+    white-space: nowrap;
+}
+.admin-add-btn:hover {
+    background: #238636;
+    color: #fff;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.admin-action-edit,
+.admin-action-delete {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    transition: background var(--t), color var(--t), border-color var(--t);
+}
+
+.admin-action-edit {
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+}
+.admin-action-edit:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: var(--accent-soft);
+}
+
+.admin-action-delete {
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+}
+.admin-action-delete:hover {
+    color: var(--error);
+    border-color: var(--error);
+    background: rgba(218, 54, 51, 0.08);
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+    .admin-page-head {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .admin-add-btn {
+        text-align: center;
+    }
+    .admin-table th:first-child,
+    .admin-table td:first-child {
+        display: none;
+    }
+    .admin-actions {
+        flex-direction: column;
+        gap: 4px;
+    }
+    .admin-action-edit,
+    .admin-action-delete {
+        padding: 5px 10px;
+        font-size: 11px;
+    }
+}
+
+/* ============================================================
+   ADMIN NAV — Նավիգացիա հեդերում
+   ============================================================ */
+
+.admin-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 20px;
+    padding-left: 20px;
+    border-left: 1px solid var(--border);
+}
+
+.admin-nav-link {
+    display: inline-block;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-radius: var(--radius);
+    transition: color var(--t), background var(--t);
+    white-space: nowrap;
+}
+.admin-nav-link:hover {
+    color: var(--text-main);
+    background: var(--bg-elevated);
+}
+.admin-nav-link.active {
+    color: var(--accent);
+    background: var(--accent-soft);
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+    .admin-nav {
+        margin-left: 12px;
+        padding-left: 12px;
+    }
+    .admin-nav-link {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 700px) {
+    .admin-nav {
+        margin-left: 0;
+        padding-left: 0;
+        border-left: none;
+        width: 100%;
+        justify-content: center;
+        order: 2;
+    }
+    .admin-nav-link {
+        flex: 1;
+        text-align: center;
+    }
+}
+
+/* ============================================================
+   ADMIN — Ձև (form)
+   ============================================================ */
+
+.admin-form-wrap {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.admin-form {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 30px;
+}
+
+.admin-form .form-field {
+    margin-bottom: 20px;
+}
+
+.admin-form label {
+    display: block;
+    color: var(--text-main);
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.admin-form input,
+.admin-form textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-input);
+    color: var(--text-main);
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color var(--t);
+    box-sizing: border-box;
+    resize: vertical;
+}
+.admin-form input:focus,
+.admin-form textarea:focus {
+    border-color: var(--accent);
+}
+.admin-form input::placeholder,
+.admin-form textarea::placeholder {
+    color: var(--text-dim);
+}
+
+/* Երկու դաշտ նույն տողում */
+.admin-form .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* Կոճակների շարք */
+.admin-form-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+}
+
+.admin-save-btn {
+    flex: 1;
+    padding: 13px 24px;
+    background: var(--success);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--t);
+    font-family: inherit;
+}
+.admin-save-btn:hover {
+    background: #238636;
+}
+
+.admin-cancel-btn {
+    display: inline-block;
+    padding: 13px 24px;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    font-size: 14px;
+    font-weight: 500;
+    transition: color var(--t), border-color var(--t);
+    white-space: nowrap;
+}
+.admin-cancel-btn:hover {
+    color: var(--text-main);
+    border-color: var(--text-dim);
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+    .admin-form {
+        padding: 20px;
+    }
+    .admin-form .form-row {
+        grid-template-columns: 1fr;
+    }
+    .admin-form-actions {
+        flex-direction: column;
+    }
+    .admin-save-btn,
+    .admin-cancel-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* ============================================================
+   CUSTOMER AUTH (Գնորդի գրանցում և մուտք)
+   ============================================================ */
+.auth-page {
+    background: var(--bg-main);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.auth-box {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 40px;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: var(--shadow);
+}
+
+.auth-title {
+    color: var(--accent); /* Ոսկե գույնը խանութի ոճով */
+    font-size: 24px;
+    text-align: center;
+    margin: 0 0 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 700;
+}
+
+.auth-form label {
+    display: block;
+    color: var(--text-main);
+    font-size: 14px;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+.auth-form input {
+    width: 100%;
+    height: 45px;
+    padding: 0 15px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-input);
+    color: var(--text-main);
+    font-size: 14px;
+    margin-bottom: 18px;
+    outline: none;
+    transition: border-color var(--t);
+    box-sizing: border-box;
+}
+
+.auth-form input:focus {
+    border-color: var(--accent); /* Ոսկե եզրագիծ, երբ սեղմում ես */
+}
+
+.auth-submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--accent); /* Ոսկե կոճակ */
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--t);
+}
+
+.auth-submit-btn:hover {
+    background: var(--accent-hover);
+}
+
+.auth-links {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.auth-links a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-links a:hover {
+    text-decoration: underline;
+}
+
+/* Գնորդի ողջույնը հեդերում */
+.user-greeting {
+    color: var(--text-main);
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    margin-right: 10px;
+}
+
+/* Ենթախումբ ողջույնի և ելքի համար */
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Ողջույնի և Ելքի միջև հեռավորությունը */
+    margin-left: 15px; /* ԱՐԱՆՔԸ ԼԵԶՎԻ ԵՎ ՕԳՏԱՏԻՐՈՋ ՄԻՋԵՎ */
+    padding-left: 15px;
+    border-left: 1px solid var(--border); /* Նուրբ գիծ, որը բաժանում է ենթախումբը */
+}
+
+/* ============================================================
+   ՆԵՂ ԷԿՐԱՆՆԵՐԻ ՕՊՏԻՄԻԶԱՑԻԱ
+   ============================================================ */
+@media (max-width: 900px) {
+    /* Թաքցնում ենք «Գնումներ» բառը, թողնում ենք միայն 📜 պատկերակը */
+    .history-text {
+        display: none;
+    }
+}
+
+@media (max-width: 700px) {
+    .greeting-text {
+        display: none; /* Թաքցնում ենք «Ողջույն, » բառը */
+    }
+    
+    .user-actions {
+        margin-left: 5px;
+        padding-left: 8px;
+        gap: 5px;
+    }
+    
+    .user-greeting {
+        font-size: 12px;
+        max-width: 70px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    .header-link {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+
+    .lang select {
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+}
