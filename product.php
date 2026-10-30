@@ -23,6 +23,7 @@ if (!$data) {
 
 // ─── Ստեղծում ենք Product object ───
 $product = new Product(
+    $pdo,
     $data['id'],
     $data['name'],
     $data['stock'],
@@ -141,6 +142,7 @@ $relatedData = $stmt->fetchAll();
                 <?php foreach ($relatedData as $rdata): ?>
                     <?php
                     $rp = new Product(
+                        $pdo,
                         $rdata['id'], $rdata['name'], $rdata['stock'],
                         $rdata['price'], $rdata['category'],
                         $rdata['discount'], $rdata['description']
@@ -338,6 +340,7 @@ $relatedData = $stmt->fetchAll();
                 <?php foreach ($relatedData as $rdata): ?>
                     <?php
                     $rp = new Product(
+                        $pdo,
                         $rdata['id'], $rdata['name'], $rdata['stock'],
                         $rdata['price'], $rdata['category'],
                         $rdata['discount'], $rdata['description']

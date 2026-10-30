@@ -23,11 +23,11 @@ document.addEventListener("click", function (e) {
 
     btn.disabled = true;
 
-    const name = btn.getAttribute("data-name");
-
+    const productId = btn.getAttribute("data-id");
+    console.log("Սեղմված կոճակի ID-ն:", productId);
     /* --- ADD --- */
     if (btn.classList.contains("add-to-cart")) {
-    const data = { name: name };
+    const data = { id: productId };
     if (btn.hasAttribute("data-quantity")) {
         data.quantity = btn.getAttribute("data-quantity");
     }
@@ -37,7 +37,7 @@ document.addEventListener("click", function (e) {
 
     /* --- DELETE --- */
     if (btn.classList.contains("del-btn")) {
-        sendAction("remove.php", { name: name }, btn);
+        sendAction("remove.php", { id: productId }, btn);
         return;
     }
 
@@ -47,9 +47,9 @@ document.addEventListener("click", function (e) {
         const currentQty = parseInt(row.querySelector(".qty-value").textContent, 10);
 
         if (currentQty <= 1) {
-            sendAction("remove.php", { name: name }, btn);
+            sendAction("remove.php", { id: productId }, btn);
         } else {
-            sendAction("update.php", { name: name, quantity: currentQty - 1 }, btn);
+            sendAction("update.php", { id: productId, quantity: currentQty - 1 }, btn);
         }
         return;
     }
@@ -58,7 +58,7 @@ document.addEventListener("click", function (e) {
     if (btn.classList.contains("plus-btn")) {
         const row = btn.closest(".cart-item");
         const currentQty = parseInt(row.querySelector(".qty-value").textContent, 10);
-        sendAction("update.php", { name: name, quantity: currentQty + 1 }, btn);
+        sendAction("update.php", { id: productId, quantity: currentQty + 1 }, btn);
         return;
     }
 });

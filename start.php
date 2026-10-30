@@ -19,6 +19,7 @@ function getAllCategories() {
 }
 
 class Product {
+    public $pdo;
     public $id;
     public $name;
     public $stock;
@@ -26,8 +27,10 @@ class Product {
     public $category;
     public $discount;
     public $description;
+    
 
-    public function __construct($productId, $productName, $productStock, $productPrice, $productCategory, $productDiscount = 0, $productDescription = '') {
+    public function __construct($pdo, $productId, $productName, $productStock, $productPrice, $productCategory, $productDiscount = 0, $productDescription = '') {
+        $this->pdo = $pdo;
         $this->id = $productId;
         $this->name = $productName;
         $this->stock = $productStock;
@@ -52,8 +55,11 @@ class Product {
         }
     }
 
-public function buy($quantity) {
-    global $pdo;   // ← ԱՍՏՂԱՆԻՇ․ DB-ի կապը տեսնելու համար
+    public function __sleep() {
+    return ['id', 'name', 'stock', 'price', 'category', 'discount', 'description'];
+}
+
+public function buy($quantity, $pdo) {
 
     if ($quantity <= 0) {
         return "Քանակը պետք է լինի 0-ից մեծ։\n";
@@ -68,7 +74,7 @@ public function buy($quantity) {
         $this->stock -= $quantity;
 
         // 2. Թարմացնում ենք DB-ի stock-ը ✅
-        $stmt = $pdo->prepare("UPDATE products SET stock = stock - ? WHERE id = ?");
+        $stmt = $this->pdo->prepare("UPDATE products SET stock = stock - ? WHERE id = ?");
         $stmt->execute([$quantity, $this->id]);
 
         return "Գնվեց {$quantity} հատ {$this->name}, Արժեքը՝ {$defaultPrice} Դ․, Զեղչ՝ {$lineDiscount} Դ․, Վճարման արժեքը զեղչվելուց հետո՝ {$productTotal} Դ․\n";
@@ -117,8 +123,8 @@ class Cart {
 
     public function add($product, $quantity = 1) {
         foreach ($this->products as $key => $item) {
-            // Փոխարինել ենք type-ը name-ով, որ համապատասխանի մեր դասին
-            if ($item['product']->name === $product->name) {
+            // Ստուգում ենք ID-ով, որ նույնանուն ապրանքները չխառնվեն
+            if ($item['product']->id === $product->id) {
                 $newQuantity = $item['quantity'] + $quantity;
                 if ($newQuantity > $product->stock) {
                     return "Ներողություն, պահեստում կա միայն {$product->stock} հատ։ Դուք արդեն ունեք {$item['quantity']} հատ զամբյուղում։\n";
@@ -148,7 +154,7 @@ class Cart {
             return "Պահեստում չկա բավարար ապրանք";
         }
         foreach ($this->products as $key => $item) {
-            if ($item['product']->name === $product->name) {
+            if ($item['product']->id === $product->id) {
                 $this->products[$key]['quantity'] = $newQuantity;
                 return "{$product->name}-ի քանակը թարմացվեց՝ {$newQuantity} հատ։\n";
             }
@@ -156,6 +162,27 @@ class Cart {
 
         return "{$product->name}-ը զամբյուղում չկա։\n";
     }
+
+        public function remove($product) {
+        foreach ($this->products as $key => $item) {
+            if ($item['product']->id === $product->id) {
+                unset($this->products[$key]);
+                return "{$product->name}-ը հանվեց զամբյուղից։\n";
+            }
+        }
+        return "{$product->name}-ը զամբյուղում չկա։\n";
+    }
+    
+    public function checkout($pdo) {
+    foreach ($this->products as $item) {
+        $product  = $item['product'];
+        $quantity = $item['quantity'];
+        echo $product->buy($quantity, $pdo); // <--- Փոխանցում ենք $pdo-ն
+    }
+    $total = $this->getTotal();
+    $this->products = [];
+    return $total;
+}
 
     public function getTotalDefault() {
         $sum = 0;
@@ -187,26 +214,6 @@ class Cart {
         return $sum;
     }
 
-    public function remove($product) {
-        foreach ($this->products as $key => $item) {
-            if ($item['product']->name === $product->name) {
-                unset($this->products[$key]);
-                return "{$product->name}-ը հանվեց զամբյուղից։\n";
-            }
-        }
-        return "{$product->name}-ը զամբյուղում չկա։\n";
-    }
-
-    public function checkout() {
-        foreach ($this->products as $item) {
-            $product  = $item['product'];
-            $quantity = $item['quantity'];
-            echo $product->buy($quantity);
-        }
-        $total = $this->getTotal();
-        $this->products = [];
-        return $total;
-    }
 }
 
 // 1. Միացնում ենք տվյալների բազայի կապը
@@ -220,6 +227,7 @@ $productsData = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $_SESSION['products'] = [];
 foreach ($productsData as $data) {
     $product = new Product(
+        $pdo,
         $data['id'],
         $data['name'],
         $data['stock'],

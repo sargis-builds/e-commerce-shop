@@ -84,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // 7. Թարմացնում ենք stock-ը
-        $cart->checkout();
+        $cart->checkout($pdo);
 
         // 8. Redirect
         header('Location: thanks.php');

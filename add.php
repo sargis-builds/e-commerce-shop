@@ -2,23 +2,25 @@
 require 'start.php';
 header('Content-Type: application/json');
 
-$name = $_POST['name'] ?? null;
-$quantity = (int)($_POST['quantity'] ?? 1);
-
-if ($name === null) {
-    echo json_encode(['success' => false, 'message' => 'Տվյալները բացակայում են']);
+// 1. Անվտանգ ստուգում ID-ի համար
+$id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+if ($id <= 0) {
+    echo json_encode(['success' => false, 'message' => 'Անվավեր ապրանք']);
     exit;
 }
 
-// Ստուգում ենք, որ quantity-ն դրական թիվ լինի
-if ($quantity < 1) {
-    $quantity = 1;
+// 2. Անվտանգ ստուգում քանակի համար
+$quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
+if ($quantity <= 0) {
+    echo json_encode(['success' => false, 'message' => 'Քանակը պետք է լինի 0-ից մեծ']);
+    exit;
 }
 
+// 3. Փնտրում ենք ապրանքը
 $product = null;
 foreach ($products as $category => $items) {
     foreach ($items as $p) {
-        if ($p->name === $name) {
+        if ($p->id === $id) {
             $product = $p;
             break 2;
         }
@@ -30,8 +32,9 @@ if ($product === null) {
     exit;
 }
 
+// 4. Ավելացնում ենք զամբյուղ և ստուգում պատասխանը
 $message = $cart->add($product, $quantity);
-$isSuccess = !str_starts_with($message, "Ներողություն");
+$isSuccess = (strpos($message, "Ներողություն") === false);
 
 echo json_encode([
     'success' => $isSuccess,

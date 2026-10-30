@@ -2,10 +2,10 @@
 require 'start.php';
 header('Content-Type: application/json');
 
-$name = $_POST['name'] ?? null;
-$quantity = $_POST['quantity'] ?? null;
+$id = (int)($_POST['id'] ?? 0);
+$quantity = (int)($_POST['quantity'] ?? 0);
 
-if ($name === null || $quantity === null) {
+if ($id <= 0 || $quantity <= 0) {
     echo json_encode(['success' => false, 'message' => 'Տվյալները բացակայում են']);
     exit;
 }
@@ -13,7 +13,7 @@ if ($name === null || $quantity === null) {
 $product = null;
 foreach ($products as $category => $items) {
     foreach ($items as $p) {
-        if ($p->name === $name) {
+        if ($p->id === $id) {
             $product = $p;
             break 2;
         }

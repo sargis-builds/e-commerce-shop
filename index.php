@@ -5,7 +5,7 @@ require 'start.php';
 $cartQty = [];
 if (!empty($_SESSION['cart']->products)) {
     foreach ($_SESSION['cart']->products as $item) {
-        $cartQty[$item['product']->name] = $item['quantity'];
+        $cartQty[$item['product']->id] = $item['quantity'];
     }
 }
 
@@ -63,6 +63,7 @@ if ($search !== '') {
                     <?php foreach ($searchResults as $data): ?>
                         <?php
                         $product = new Product(
+                            $pdo,
                             $data['id'],
                             $data['name'],
                             $data['stock'],
@@ -71,7 +72,7 @@ if ($search !== '') {
                             $data['discount'],
                             $data['description']
                         );
-                        $qtyInCart = $cartQty[$product->name] ?? 0;
+                        $qtyInCart = $cartQty[$product->id] ?? 0;
                         $available = $product->stock - $qtyInCart;
                         ?>
                         <div class="product <?= $available <= 0 ? 'out-of-stock' : '' ?>" data-available="<?= $available ?>">
@@ -92,7 +93,7 @@ if ($search !== '') {
                                 <p>Առկա է <?= number_format($product->stock) ?> Հատ</p>
                                 <p>Զեղչված արժեքը՝ <?= number_format($product->price - $product->discount) ?> Դ</p>
                             </a>
-                            <button class="add-to-cart" data-name="<?= htmlspecialchars($product->name) ?>">
+                            <button class="add-to-cart" data-id="<?= $product->id ?>">
                                 <?= $available <= 0 ? 'Սպառվել է' : 'Ավելացնել (🛒)' ?>
                             </button>
                         </div>
@@ -120,7 +121,7 @@ if ($search !== '') {
             <div class="products-grid">
                 <?php foreach ($allProducts as $index => $product): ?>
                     <?php
-                    $qtyInCart = $cartQty[$product->name] ?? 0;
+                    $qtyInCart = $cartQty[$product->id] ?? 0;
                     $available = $product->stock - $qtyInCart;
                     ?>
                     <div class="product <?= $available <= 0 ? 'out-of-stock' : '' ?>" data-available="<?= $available ?>">
@@ -141,7 +142,7 @@ if ($search !== '') {
                             <p>Առկա է <?= number_format($product->stock) ?> Հատ</p>
                             <p>Զեղչված արժեքը՝ <?= number_format($product->price - $product->discount) ?> Դ</p>
                         </a>
-                        <button class="add-to-cart" data-name="<?= htmlspecialchars($product->name) ?>">
+                        <button class="add-to-cart" data-id="<?= $product->id ?>">
                             <?= $available <= 0 ? 'Սպառվել է' : 'Ավելացնել (🛒)' ?>
                         </button>
                     </div>
@@ -156,7 +157,7 @@ if ($search !== '') {
                 <div class="products-grid">
                     <?php foreach ($items as $index => $product): ?>
                         <?php
-                        $qtyInCart = $cartQty[$product->name] ?? 0;
+                        $qtyInCart = $cartQty[$product->id] ?? 0;
                         $available = $product->stock - $qtyInCart;
                         ?>
                         <div class="product <?= $available <= 0 ? 'out-of-stock' : '' ?>" data-available="<?= $available ?>">
@@ -177,7 +178,7 @@ if ($search !== '') {
                                 <p>Առկա է <?= number_format($product->stock) ?> Հատ</p>
                                 <p>Զեղչված արժեքը՝ <?= number_format($product->price - $product->discount) ?> Դ</p>
                             </a>
-                            <button class="add-to-cart" data-name="<?= htmlspecialchars($product->name) ?>">
+                            <button class="add-to-cart" data-id="<?= $product->id ?>">
                                 <?= $available <= 0 ? 'Սպառվել է' : 'Ավելացնել (🛒)' ?>
                             </button>
                         </div>

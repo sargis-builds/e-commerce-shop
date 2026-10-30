@@ -26,7 +26,7 @@ require 'start.php';
             <?php foreach ($cart->products as $index => $item): ?>
                 <?php $product = $item['product']; ?>
                 <?php $quantity = $item['quantity']; ?>
-                <div class="cart-item" data-name="<?= htmlspecialchars($product->name) ?>">
+                <div class="cart-item" data-id="<?= $product->id ?>">
                     <div class="cart-item-image">
                         <?php if ($product->discount > 0): ?>
                             <span class="discount-badge">-<?= $product->discount ?> Դ</span>
@@ -43,9 +43,9 @@ require 'start.php';
                             <span class="new-price"><?= number_format(($product->price - $product->discount) * $quantity) ?> Դ</span>
                         </div>
                         <div class="cart-item-buttons">
-                            <button type="button" class="del-btn" data-name="<?= htmlspecialchars($product->name) ?>">Ջնջ․</button>
-                            <button type="button" class="minus-btn" data-name="<?= htmlspecialchars($product->name) ?>">−</button>
-                            <button type="button" class="plus-btn" data-name="<?= htmlspecialchars($product->name) ?>">+</button>
+                            <button type="button" class="del-btn" data-id="<?= $product->id ?>">Ջնջ․</button>
+<button type="button" class="minus-btn" data-id="<?= $product->id ?>">−</button>
+<button type="button" class="plus-btn" data-id="<?= $product->id ?>">+</button>
                         </div>
                     </div>
                 </div>
