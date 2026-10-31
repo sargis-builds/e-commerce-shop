@@ -6,7 +6,7 @@ $backLink = $backLink ?? null;
 
 $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
-<header class="top-header">
+<header class="top-header admin-header">
     <div class="left-group">
         <a href="admin.php" class="logo">
             <span class="logo-text">🛒 Իմ Խանութը</span>

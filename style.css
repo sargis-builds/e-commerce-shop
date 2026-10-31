@@ -2188,3 +2188,82 @@ button:focus-visible, .btn:focus-visible, a:focus-visible {
         font-size: 12px;
     }
 }
+
+/* ============================================================
+   ADMIN MOBILE HEADER FIX (2 ՏՈՂՈՎ)
+   ============================================================ */
+@media (max-width: 700px) {
+    .top-header.admin-header {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "logo right"
+            "nav  nav";
+        align-items: center;
+        height: auto;
+        padding: 10px 15px;
+        gap: 12px;
+    }
+
+    /* Կոտրում ենք left-group-ը, որ լոգոն և մենյուն առանձին դաշտեր դառնան */
+    .admin-header .left-group {
+        display: contents;
+    }
+
+    .admin-header .logo {
+        grid-area: logo;
+        justify-self: start;
+    }
+
+    .admin-header .right-group {
+        grid-area: right;
+        justify-self: end;
+        border-top: none;
+        padding-top: 0;
+        margin-top: 0;
+        gap: 6px; /* Կծկում ենք կոճակների արանքը */
+    }
+
+    .admin-header .admin-nav {
+        grid-area: nav;
+        width: 100%;
+        margin: 0;
+        padding-top: 10px;
+        border-left: none;
+        border-top: 1px solid var(--border);
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .admin-header .admin-nav-link {
+        flex: 1;
+        text-align: center;
+        padding: 8px;
+        background: var(--bg-elevated);
+        border-radius: var(--radius);
+    }
+
+    /* Փոքրացնում ենք տեքստերը, որ 1-ին տողում տեղավորվեն */
+    .admin-header .admin-greeting {
+        font-size: 11px;
+        margin: 0;
+    }
+
+    .admin-header .admin-logout-btn {
+        padding: 5px 10px;
+        font-size: 11px;
+    }
+
+    .admin-header .lang select {
+        padding: 5px 8px;
+        font-size: 11px;
+    }
+
+    /* Եթե հետ գնալու հղում կա (օրինակ՝ ապրանք ավելացնելիս), այն ցած ենք դնում */
+    .admin-header .admin-header-title {
+        grid-column: 1 / -1;
+        grid-row: 3;
+        text-align: center;
+        margin-top: 5px;
+    }
+}
