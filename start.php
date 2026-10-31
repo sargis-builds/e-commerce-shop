@@ -74,7 +74,7 @@ public function buy($quantity, $pdo) {
         $this->stock -= $quantity;
 
         // 2. Թարմացնում ենք DB-ի stock-ը ✅
-        $stmt = $this->pdo->prepare("UPDATE products SET stock = stock - ? WHERE id = ?");
+        $stmt = $pdo->prepare("UPDATE products SET stock = stock - ? WHERE id = ?");
         $stmt->execute([$quantity, $this->id]);
 
         return "Գնվեց {$quantity} հատ {$this->name}, Արժեքը՝ {$defaultPrice} Դ․, Զեղչ՝ {$lineDiscount} Դ․, Վճարման արժեքը զեղչվելուց հետո՝ {$productTotal} Դ․\n";

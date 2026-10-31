@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("SELECT id, username, password_hash FROM admins WHERE username = ?");
         $stmt->execute([$username]);
         $admin = $stmt->fetch();
+        
 
         if ($admin && password_verify($password, $admin['password_hash'])) {
             session_regenerate_id(true);
