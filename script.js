@@ -41,18 +41,19 @@ document.addEventListener("click", function (e) {
         return;
     }
 
-    /* --- MINUS --- */
+        /* --- MINUS --- */
     if (btn.classList.contains("minus-btn")) {
         const row = btn.closest(".cart-item");
         const currentQty = parseInt(row.querySelector(".qty-value").textContent, 10);
 
+        // Եթե քանակը 1 կամ ավելի քիչ է, ոչինչ չենք անում
         if (currentQty <= 1) {
-            sendAction("remove.php", { id: productId }, btn);
-        } else {
-            sendAction("update.php", { id: productId, quantity: currentQty - 1 }, btn);
+            return;
         }
+        sendAction("update.php", { id: productId, quantity: currentQty - 1 }, btn);
         return;
     }
+
 
     /* --- PLUS --- */
     if (btn.classList.contains("plus-btn")) {
@@ -120,6 +121,7 @@ function refreshCart() {
             const newContent = doc.getElementById("cart-content");
             if (newContent) {
                 cartContent.innerHTML = newContent.innerHTML;
+                updateMinusButtons(); // <--- ԱՅՍ ՏՈՂՆ ԱՎԵԼԱՑՐՈՒ
             }
         });
 }
@@ -400,4 +402,27 @@ if (categoryFilter) {
     }
 })();
 
+/* ============================================================
+   ՄԻՆՈՒՍԻ ԿՈՃԱԿԻ ԿԱՌԱՎԱՐՈՒՄ
+   ============================================================ */
+function updateMinusButtons() {
+    document.querySelectorAll(".cart-item").forEach(row => {
+        const qtyEl = row.querySelector(".qty-value");
+        const minusBtn = row.querySelector(".minus-btn");
+        if (qtyEl && minusBtn) {
+            const qty = parseInt(qtyEl.textContent, 10);
+            if (qty <= 1) {
+                minusBtn.disabled = true;
+                minusBtn.style.opacity = "0.4";
+                minusBtn.style.cursor = "not-allowed";
+            } else {
+                minusBtn.disabled = false;
+                minusBtn.style.opacity = "1";
+                minusBtn.style.cursor = "pointer";
+            }
+        }
+    });
+}
 
+// Կանչում ենք էջը բացելիս
+document.addEventListener("DOMContentLoaded", updateMinusButtons);

@@ -107,26 +107,26 @@ $relatedData = $stmt->fetchAll();
             </div>
 
             <?php if ($available > 0): ?>
-    <div class="product-page-actions">
-        <div class="qty-selector">
-            <div class="qty-controls">
-                <button type="button" class="qty-btn" id="qtyMinus">−</button>
-                <input type="text" id="qtyInput" value="1" 
-                       data-max="<?= $available ?>" readonly>
-                <button type="button" class="qty-btn" id="qtyPlus">+</button>
-            </div>
-        </div>
-        <button 
-            class="add-to-cart product-page-btn"
-            data-id="<?= $product->id ?>"
-            id="addBtn"
-        >
-            🛒 Ավելացնել զամբյուղ
-        </button>
-    </div>
-<?php else: ?>
-    <button class="product-page-btn" disabled>Սպառվել է</button>
-<?php endif; ?>
+                <div class="product-page-actions">
+                    <div class="qty-selector">
+                        <div class="qty-controls">
+                            <button type="button" class="qty-btn" id="qtyMinus">−</button>
+                            <input type="text" id="qtyInput" value="1" 
+                                   data-max="<?= $available ?>" readonly>
+                            <button type="button" class="qty-btn" id="qtyPlus">+</button>
+                        </div>
+                    </div>
+                    <button 
+                        class="add-to-cart product-page-btn"
+                        data-id="<?= $product->id ?>"
+                        id="addBtn"
+                    >
+                        🛒 Ավելացնել զամբյուղ
+                    </button>
+                </div>
+            <?php else: ?>
+                <button class="product-page-btn" disabled>Սպառվել է</button>
+            <?php endif; ?>
 
             <a href="cart.php" class="product-page-cart-link">
                 Անցնել զամբյուղ →
@@ -158,28 +158,30 @@ $relatedData = $stmt->fetchAll();
                     }
                     $rAvail = $rp->stock - $rCartQty;
                     ?>
-                    <a href="product.php?id=<?= $rp->id ?>" class="product-link">
-                        <div class="product <?= $rAvail <= 0 ? 'out-of-stock' : '' ?>">
-                            <div class="product-image">
-                                <?php if ($rp->hasSuperMassiveDiscount()): ?>
-                                    <span class="hot-badge super">🔥 -<?= $rp->getDiscountPercent() ?>%</span>
-                                <?php elseif ($rp->hasMassiveDiscount()): ?>
-                                    <span class="hot-badge">🔥 -<?= $rp->getDiscountPercent() ?>%</span>
-                                <?php elseif ($rp->discount > 0): ?>
-                                    <span class="sale-badge">-<?= $rp->getDiscountPercent() ?>%</span>
-                                <?php endif; ?>
-                            </div>
-                            <h3><?= htmlspecialchars($rp->name) ?></h3>
+                    <div class="product-link">
+                        <div class="product <?= $rAvail <= 0 ? 'out-of-stock' : '' ?>" data-available="<?= $rAvail ?>">
+                            <a href="product.php?id=<?= $rp->id ?>" style="text-decoration: none; color: inherit; display: block;">
+                                <div class="product-image">
+                                    <?php if ($rp->hasSuperMassiveDiscount()): ?>
+                                        <span class="hot-badge super">🔥 -<?= $rp->getDiscountPercent() ?>%</span>
+                                    <?php elseif ($rp->hasMassiveDiscount()): ?>
+                                        <span class="hot-badge">🔥 -<?= $rp->getDiscountPercent() ?>%</span>
+                                    <?php elseif ($rp->discount > 0): ?>
+                                        <span class="sale-badge">-<?= $rp->getDiscountPercent() ?>%</span>
+                                    <?php endif; ?>
+                                </div>
+                                <h3><?= htmlspecialchars($rp->name) ?></h3>
+                            </a>
                             <p class="description"><?= htmlspecialchars($rp->description) ?></p>
                             <p>Արժեքը՝ <?= number_format($rp->price) ?> Դ</p>
                             <p>Զեղչ՝ <?= number_format($rp->discount) ?> Դ</p>
                             <p>Առկա է <?= number_format($rp->stock) ?> Հատ</p>
                             <p>Զեղչված արժեքը՝ <?= number_format($rp->price - $rp->discount) ?> Դ</p>
                             <button class="add-to-cart" data-id="<?= $rp->id ?>">
-                                <?= $rAvail <= 0 ? 'Սպառվել է' : 'Ավելացնել (🛒)' ?>
-                            </button>
+    <?= $rp->stock <= 0 ? 'Սպառվել է' : 'Ավելացնել (🛒)' ?>
+</button>
                         </div>
-                    </a>
+                    </div>
                 <?php endforeach; ?>
             </div>
         </div>

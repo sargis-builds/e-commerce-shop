@@ -369,6 +369,7 @@ button:focus-visible, .btn:focus-visible, a:focus-visible {
     border: 1px solid var(--border);
     transition: border-color var(--t);
     gap: 6px;
+    position: relative;
 }
 
 .product:hover { border-color: var(--text-dim); }
