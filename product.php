@@ -69,7 +69,17 @@ $relatedData = $stmt->fetchAll();
     <div class="product-page">
         <!-- ═══ Ձախ՝ նկար ═══ -->
         <div class="product-page-image">
-            <?php if ($product->hasSuperMassiveDiscount()): ?>
+    <?php 
+        $icon = '📦';
+        $pName = mb_strtolower($product->name, 'UTF-8');
+        if (strpos($pName, 'iphone') !== false) $icon = '📱';
+        elseif (strpos($pName, 'macbook') !== false) $icon = '💻';
+        elseif (strpos($pName, 't-shirt') !== false || strpos($pName, 'շապիկ') !== false) $icon = '👕';
+        elseif (strpos($pName, 'sneaker') !== false || strpos($pName, 'կոշիկ') !== false) $icon = '👟';
+    ?>
+    <span class="product-icon"><?= $icon ?></span>
+
+    <?php if ($product->hasSuperMassiveDiscount()): ?>
                 <span class="hot-badge super">🔥 -<?= $product->getDiscountPercent() ?>%</span>
             <?php elseif ($product->hasMassiveDiscount()): ?>
                 <span class="hot-badge">🔥 -<?= $product->getDiscountPercent() ?>%</span>
@@ -162,6 +172,16 @@ $relatedData = $stmt->fetchAll();
                         <div class="product <?= $rAvail <= 0 ? 'out-of-stock' : '' ?>" data-available="<?= $rAvail ?>">
                             <a href="product.php?id=<?= $rp->id ?>" style="text-decoration: none; color: inherit; display: block;">
                                 <div class="product-image">
+                                    <?php 
+                                        $icon = '📦';
+                                        $rpName = mb_strtolower($rp->name, 'UTF-8');
+                                        if (strpos($rpName, 'iphone') !== false) $icon = '📱';
+                                        elseif (strpos($rpName, 'macbook') !== false) $icon = '💻';
+                                        elseif (strpos($rpName, 't-shirt') !== false || strpos($rpName, 'շապիկ') !== false) $icon = '👕';
+                                        elseif (strpos($rpName, 'sneaker') !== false || strpos($rpName, 'կոշիկ') !== false) $icon = '👟';
+                                    ?>
+                                    <span class="product-icon"><?= $icon ?></span>
+
                                     <?php if ($rp->hasSuperMassiveDiscount()): ?>
                                         <span class="hot-badge super">🔥 -<?= $rp->getDiscountPercent() ?>%</span>
                                     <?php elseif ($rp->hasMassiveDiscount()): ?>

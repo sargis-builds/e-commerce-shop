@@ -38,12 +38,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!empty($errors)) {
         $error = "Խնդրում ենք ուղղել նշված դաշտերը";
     } else {
-        // 1. Ստեղծում ենք պատվեր՝ դատարկ order_number-ով
+                // Ստուգում ենք՝ արդյոք օգտատերը մուտք է գործել
+        $userId = $_SESSION['user_id'] ?? null;
+
+        // 1. Ստեղծում ենք պատվեր՝ դատարկ order_number-ով և user_id-ով
         $stmt = $pdo->prepare("
-            INSERT INTO orders (order_number, name, phone, address, total, created_at)
-            VALUES ('', ?, ?, ?, ?, NOW())
+            INSERT INTO orders (order_number, user_id, name, phone, address, total, created_at)
+            VALUES ('', ?, ?, ?, ?, ?, NOW())
         ");
         $stmt->execute([
+            $userId,
             $name,
             $phone,
             $address,

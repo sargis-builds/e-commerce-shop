@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 31, 2026 at 02:53 PM
+-- Generation Time: Nov 01, 2026 at 09:57 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -49,6 +49,7 @@ INSERT INTO `admins` (`id`, `username`, `password_hash`, `created_at`) VALUES
 
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `order_number` varchar(50) NOT NULL,
   `name` varchar(255) NOT NULL,
   `phone` varchar(50) NOT NULL,
@@ -72,6 +73,15 @@ CREATE TABLE `order_items` (
   `price` decimal(10,0) NOT NULL,
   `discount` decimal(10,0) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_name`, `quantity`, `price`, `discount`) VALUES
+(17, 13, 2, 'MacBook Air M2', 1, 550000, 200000),
+(18, 14, 1, 'iPhone 15', 1, 450000, 100000),
+(19, 14, 2, 'MacBook Air M2', 1, 550000, 200000);
 
 -- --------------------------------------------------------
 
@@ -174,19 +184,19 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`

@@ -77,8 +77,18 @@ if ($search !== '') {
                         ?>
                         <div class="product <?= $available <= 0 ? 'out-of-stock' : '' ?>" data-available="<?= $available ?>">
                             <a href="product.php?id=<?= $product->id ?>" class="product-link">
-                                <div class="product-image">
-                                    <?php if ($product->hasSuperMassiveDiscount()): ?>
+                             <div class="product-image">
+    <?php 
+        $icon = '📦'; // Լռելյայն պատկերակ
+        $pName = mb_strtolower($product->name, 'UTF-8');
+        if (strpos($pName, 'iphone') !== false) $icon = '📱';
+        elseif (strpos($pName, 'macbook') !== false) $icon = '💻';
+        elseif (strpos($pName, 't-shirt') !== false || strpos($pName, 'շապիկ') !== false) $icon = '👕';
+        elseif (strpos($pName, 'sneaker') !== false || strpos($pName, 'կոշիկ') !== false) $icon = '👟';
+    ?>
+    <span class="product-icon"><?= $icon ?></span>
+
+    <?php if ($product->hasSuperMassiveDiscount()): ?>
                                         <span class="hot-badge super">🔥 -<?= $product->getDiscountPercent() ?>%</span>
                                     <?php elseif ($product->hasMassiveDiscount()): ?>
                                         <span class="hot-badge">🔥 -<?= $product->getDiscountPercent() ?>%</span>
@@ -127,7 +137,17 @@ if ($search !== '') {
                     <div class="product <?= $available <= 0 ? 'out-of-stock' : '' ?>" data-available="<?= $available ?>">
                         <a href="product.php?id=<?= $product->id ?>" class="product-link">
                             <div class="product-image">
-                                <?php if ($product->hasSuperMassiveDiscount()): ?>
+    <?php 
+        $icon = '📦'; // Լռելյայն պատկերակ
+        $pName = mb_strtolower($product->name, 'UTF-8');
+        if (strpos($pName, 'iphone') !== false) $icon = '📱';
+        elseif (strpos($pName, 'macbook') !== false) $icon = '💻';
+        elseif (strpos($pName, 't-shirt') !== false || strpos($pName, 'շապիկ') !== false) $icon = '👕';
+        elseif (strpos($pName, 'sneaker') !== false || strpos($pName, 'կոշիկ') !== false) $icon = '👟';
+    ?>
+    <span class="product-icon"><?= $icon ?></span>
+
+    <?php if ($product->hasSuperMassiveDiscount()): ?>
                                     <span class="hot-badge super">🔥 -<?= $product->getDiscountPercent() ?>%</span>
                                 <?php elseif ($product->hasMassiveDiscount()): ?>
                                     <span class="hot-badge">🔥 -<?= $product->getDiscountPercent() ?>%</span>
@@ -163,7 +183,17 @@ if ($search !== '') {
                         <div class="product <?= $available <= 0 ? 'out-of-stock' : '' ?>" data-available="<?= $available ?>">
                             <a href="product.php?id=<?= $product->id ?>" class="product-link">
                                 <div class="product-image">
-                                    <?php if ($product->hasSuperMassiveDiscount()): ?>
+    <?php 
+        $icon = '📦'; // Լռելյայն պատկերակ
+        $pName = mb_strtolower($product->name, 'UTF-8');
+        if (strpos($pName, 'iphone') !== false) $icon = '📱';
+        elseif (strpos($pName, 'macbook') !== false) $icon = '💻';
+        elseif (strpos($pName, 't-shirt') !== false || strpos($pName, 'շապիկ') !== false) $icon = '👕';
+        elseif (strpos($pName, 'sneaker') !== false || strpos($pName, 'կոշիկ') !== false) $icon = '👟';
+    ?>
+    <span class="product-icon"><?= $icon ?></span>
+
+    <?php if ($product->hasSuperMassiveDiscount()): ?>
                                         <span class="hot-badge super">🔥 -<?= $product->getDiscountPercent() ?>%</span>
                                     <?php elseif ($product->hasMassiveDiscount()): ?>
                                         <span class="hot-badge">🔥 -<?= $product->getDiscountPercent() ?>%</span>
